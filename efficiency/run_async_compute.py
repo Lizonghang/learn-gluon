@@ -1,7 +1,4 @@
-from mxnet import autograd, gluon, nd
-from mxnet.gluon import loss as gloss
-import os
-import subprocess
+from mxnet import nd
 import time
 
 
