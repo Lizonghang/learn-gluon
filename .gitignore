@@ -109,3 +109,6 @@ models/
 
 # pycharm
 .idea
+
+# system
+.DS_Store
