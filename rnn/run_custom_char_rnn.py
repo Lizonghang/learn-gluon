@@ -32,7 +32,7 @@ corpus_indices = [char_to_idx[char] for char in corpus_chars]
 def data_iter_random(corpus_indices, batch_size, num_steps, ctx=None):
     # seq = list(range(30))
     # for X, Y in data_iter_random(seq, batch_size=2, num_steps=6):
-    #     print 'X: ', X, '\nY: ', Y
+    #     print('X: ', X, '\nY: ', Y)
     #     break
     #
     # Output:
@@ -63,7 +63,7 @@ def data_iter_random(corpus_indices, batch_size, num_steps, ctx=None):
 def data_iter_consecutive(corpus_indices, batch_size, num_steps, ctx=None):
     # seq = list(range(30))
     # for X, Y in data_iter_consecutive(seq, batch_size=2, num_steps=6):
-    #     print 'X: ', X, '\nY: ', Y
+    #     print('X: ', X, '\nY: ', Y)
     #
     # Output:
     #     X:
@@ -158,7 +158,7 @@ def rnn(inputs, state, params):
     # inputs = to_onehot(X, vocab_size)
     # params = get_params()
     # outputs, state_new = rnn(inputs, state, params)
-    # print outputs, state_new
+    # print(outputs, state_new)
     W_xh, W_hh, b_h, W_hq, b_q = params
     H, = state
     outputs = []
@@ -226,10 +226,10 @@ def train_and_predict_rnn(rnn, get_params, init_rnn_state, num_hiddens, vocab_si
             loss_sum += l.asscalar()
 
         if (epoch+1) % pred_period == 0:
-            print 'epoch %d, perplexity %f, time %.2f sec' % (epoch+1, math.exp(loss_sum/(t+1)), time.time()-start)
+            print('epoch %d, perplexity %f, time %.2f sec' % (epoch+1, math.exp(loss_sum/(t+1)), time.time()-start))
             for prefix in prefixes:
-                print '-', predict_rnn(prefix, pred_len, rnn, params, init_rnn_state, num_hiddens,
-                                       vocab_size, ctx, idx_to_char, char_to_idx)
+                print('-', predict_rnn(prefix, pred_len, rnn, params, init_rnn_state, num_hiddens,
+                                       vocab_size, ctx, idx_to_char, char_to_idx))
 
 
 if __name__ == "__main__":

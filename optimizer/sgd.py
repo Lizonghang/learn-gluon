@@ -54,7 +54,7 @@ def train(trainer_fn, states, hyperparams, features, labels, batch_size, num_epo
             # version 2
             trainer.step(1)
         ls.append(eval_loss())
-        print 'epoch %d, loss: %f, %f sec per epoch' % (epoch+1, ls[-1], time.time()-start)
+        print('epoch %d, loss: %f, %f sec per epoch' % (epoch+1, ls[-1], time.time()-start))
 
     gb.set_figsize()
     gb.plt.plot(np.linspace(0, num_epochs, len(ls)), ls)

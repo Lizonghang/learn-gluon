@@ -93,7 +93,7 @@ if __name__ == "__main__":
                             optimizer="sgd",
                             optimizer_params={"learning_rate": learning_rate})
 
-    for epoch in xrange(num_epochs):
+    for epoch in range(num_epochs):
         for X, y in train_iter:
             with autograd.record():
                 # version 1
@@ -111,7 +111,7 @@ if __name__ == "__main__":
         # version 2
         train_acc = calc_acc(train_iter, net)
         val_acc = calc_acc(val_iter, net)
-        print 'epoch %d, train acc %.3f, test acc %.3f' % (epoch + 1, train_acc, val_acc)
+        print('epoch %d, train acc %.3f, test acc %.3f' % (epoch + 1, train_acc, val_acc))
 
     X, y = None, None
     for X, y in val_iter:

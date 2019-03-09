@@ -46,7 +46,7 @@ if __name__ == "__main__":
         l.backward()
         trainer.step(X.shape[0])
     nd.waitall()
-    print 'increased memory: %f MB' % (get_memory() - memory)
+    print('increased memory: %f MB' % (get_memory() - memory))
 
     memory = get_memory()
     for X, y in data_iter():
@@ -55,4 +55,4 @@ if __name__ == "__main__":
         l.backward()
         trainer.step(X.shape[0])
     nd.waitall()
-    print 'increased memory: %f MB' % (get_memory() - memory)
+    print('increased memory: %f MB' % (get_memory() - memory))

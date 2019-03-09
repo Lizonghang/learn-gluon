@@ -13,7 +13,7 @@ def get_net():
 
 def benchmark(net, X):
     start = time.time()
-    for i in xrange(1000):
+    for i in range(1000):
         _ = net(X)
     nd.waitall()
     return time.time() - start
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     X = nd.random.normal(scale=0.01, shape=(1, 512))
     net = get_net()
     net.initialize()
-    print 'before hybridizing: %.4f' % benchmark(net, X)
+    print('before hybridizing: %.4f' % benchmark(net, X))
     net.hybridize()
-    print 'after hybridizing: %.4f' % benchmark(net, X)
+    print('after hybridizing: %.4f' % benchmark(net, X))
     net.export('sym-hybrid-sequential')

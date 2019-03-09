@@ -11,7 +11,7 @@ class Benchmark:
         self.start = time.time()
 
     def __exit__(self, *args):
-        print '%stime: %.4f sec' % (self.prefix, time.time() - self.start)
+        print('%stime: %.4f sec' % (self.prefix, time.time() - self.start))
 
 
 if __name__ == "__main__":
@@ -20,9 +20,9 @@ if __name__ == "__main__":
         y = nd.dot(x, x).sum()
 
     with Benchmark("Workloads are finished."):
-        print "sum =", y.asscalar()
+        print("sum =", y.asscalar())
 
-    print
+    print()
 
     with Benchmark("Use wait_to_read()."):
         y = nd.dot(x, x).sum()

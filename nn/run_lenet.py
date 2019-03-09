@@ -36,7 +36,7 @@ if __name__ == "__main__":
                                 "learning_rate": learning_rate,
                                 "wd": weight_decay
                             })
-    for epoch in xrange(num_epochs):
+    for epoch in range(num_epochs):
         for X, y in train_iter:
             X, y = X.as_in_context(ctx), y.as_in_context(ctx)
             with autograd.record():
@@ -48,4 +48,4 @@ if __name__ == "__main__":
         for X, y in val_iter:
             y_ = net(X)
             acc += (y_.argmax(axis=1) == y.astype("float32")).mean().asscalar()
-        print 'epoch %d, acc %.3f' % (epoch+1, acc / len(val_iter))
+        print('epoch %d, acc %.3f' % (epoch+1, acc / len(val_iter)))

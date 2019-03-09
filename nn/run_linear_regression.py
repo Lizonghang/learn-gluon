@@ -73,7 +73,7 @@ if __name__ == "__main__":
         optimizer="sgd",
         optimizer_params={"learning_rate": learning_rate})
 
-    for epoch in xrange(num_epochs):
+    for epoch in range(num_epochs):
         for X, y in data_iter:
             with autograd.record():
                 # version 1
@@ -91,12 +91,12 @@ if __name__ == "__main__":
         # train_loss = loss(net(features, w, b), labels).asscalar()
         # version 2
         train_loss = loss(net(features), labels).mean().asscalar()
-        print 'epoch {}, loss {}'.format(epoch+1, train_loss)
+        print('epoch {}, loss {}'.format(epoch+1, train_loss))
 
     # version 2
     w = net[0].weight.data()
     b = net[0].bias.data()
     # version 1
-    print
-    print 'w {}, w_true {}'.format(w.reshape((num_inputs,)).asnumpy().tolist(), true_w)
-    print 'b {}, b_true {}'.format(b.reshape((1,)).asnumpy().tolist(), true_b)
+    print()
+    print('w {}, w_true {}'.format(w.reshape((num_inputs,)).asnumpy().tolist(), true_w))
+    print('b {}, b_true {}'.format(b.reshape((1,)).asnumpy().tolist(), true_b))
