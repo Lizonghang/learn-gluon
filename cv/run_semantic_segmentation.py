@@ -49,7 +49,7 @@ class VOCSegDataset(gdata.Dataset):
         return [img for img in imgs if (img.shape[0] >= self.crop_size[0] and img.shape[1] >= self.crop_size[1])]
 
     def __getitem__(self, idx):
-        feature,label = voc_rand_crop(self.features[idx], self.labels[idx], *self.crop_size)
+        feature, label = voc_rand_crop(self.features[idx], self.labels[idx], *self.crop_size)
         return feature.transpose((2, 0, 1)), voc_label_indices(label, self.colormap2label)
 
     def __len__(self):
