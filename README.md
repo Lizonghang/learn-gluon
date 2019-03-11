@@ -5,8 +5,9 @@ code of gluonbook
 ## requirements
 
 * python==3.6
-* mxnet==1.2.0
+* mxnet==1.4.0
 * gluonbook==0.8.10
-* numpy==1.14.2
-* requests==2.18.4
-* matplotlib==1.4.3
+* numpy==1.14.6
+* requests==2.21.0
+* matplotlib==3.0.3
+* colormath==3.0.0
