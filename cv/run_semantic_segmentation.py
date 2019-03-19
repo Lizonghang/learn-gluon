@@ -86,8 +86,8 @@ if __name__ == "__main__":
     crop_size = (320, 480)
     lr = 1e-1
     wd = 1e-3
-    batch_size = 64
-    num_epochs = 100
+    batch_size = 512
+    num_epochs = 1000
     num_classes = 21
     num_workers = 0 if sys.platform.startswith("win32") else 4
     ctx = [mx.gpu(0), mx.gpu(1)]
