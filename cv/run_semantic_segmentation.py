@@ -115,7 +115,7 @@ if __name__ == "__main__":
     trainer = gluon.Trainer(net.collect_params(), "sgd", {"learning_rate": lr, "wd": wd})
     gb.train(train_iter, test_iter, net, loss, trainer, ctx, num_epochs)
 
-    net.save_params("../models/fcn.params")
+    net.save_parameters("../models/fcn.params")
 
     # test_images, test_labels = read_voc_images("../data/VOC2012", is_train=False)
     # n = 4
