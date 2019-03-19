@@ -24,7 +24,7 @@ def voc_label_indices(colormap, colormap2label):
 
 
 def voc_rand_crop(feature, label, height, width):
-    feature, rect = image.random_crop(feature, (height, width))
+    feature, rect = image.random_crop(feature, (width, height))
     label = image.fixed_crop(label, *rect)
     return feature, label
 
