@@ -1,3 +1,4 @@
+import mxnet as mx
 from mxnet import kv, nd, gpu
 
 if __name__ == "__main__":
@@ -26,3 +27,15 @@ if __name__ == "__main__":
     # def allreduce(data, data_name, store):
     #     store.push(data_name, data)
     #     store.pull(data_name, out=data)
+
+    # For each push command, KVStore applies the pushed value to the value stored by an updater.
+    # The default updater is ASSIGN. You can replace the default to control how data is merged.
+    def updater(key, input, stored):
+        print("update on key: {}".format(key))
+        stored += input
+    kv_local._set_updater(updater)
+    z = mx.nd.ones(shape=SHAPE)
+    kv_local.push("params", z)
+    print('=== push to "params" ===\n{}'.format(z))
+    kv_local.pull("params", out=y)
+    print('=== pull "params" ===\n{}'.format(y))
