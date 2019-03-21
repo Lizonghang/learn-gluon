@@ -165,7 +165,7 @@ def show_images(imgs, num_rows, num_cols, scale=2):
 if __name__ == "__main__":
     """
     # On scheduler machine
-    DMLC_ROLE=scheduler DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=6 \
+    DMLC_ROLE=scheduler DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=3 DMLC_NUM_WORKER=6 \
         python ~/learn-gluon/distributed/run_kvstore_dist.py &
 
     # On other machines
