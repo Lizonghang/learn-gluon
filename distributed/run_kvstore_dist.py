@@ -1,6 +1,5 @@
 import sys
 import time
-import random
 import argparse
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,7 +9,6 @@ from mxnet.gluon import data as gdata
 from mxnet.gluon import loss as gloss
 from mxnet.gluon import utils as gutils
 from mxnet.gluon import model_zoo, nn
-
 
 VOC_CLASSES = ['background', 'aeroplane', 'bicycle', 'bird', 'boat',
                'bottle', 'bus', 'car', 'cat', 'chair', 'cow',
@@ -165,15 +163,15 @@ def show_images(imgs, num_rows, num_cols, scale=2):
 if __name__ == "__main__":
     """
     # On scheduler machine
-    DMLC_ROLE=scheduler DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=3 DMLC_NUM_WORKER=6 \
-        python ~/learn-gluon/distributed/run_kvstore_dist.py &
+    DMLC_ROLE=scheduler DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=4 \
+        python ~/learn-gluon/distributed/run_kvstore_dist.py -c 1 &
 
     # On other machines
-    DMLC_ROLE=server DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=3 DMLC_NUM_WORKER=6 \
-        python ~/learn-gluon/distributed/run_kvstore_dist.py &
-    DMLC_ROLE=worker DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=3 DMLC_NUM_WORKER=6 \
+    DMLC_ROLE=server DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=4 \
+        python ~/learn-gluon/distributed/run_kvstore_dist.py -c 1 &
+    DMLC_ROLE=worker DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=4 \
         python ~/learn-gluon/distributed/run_kvstore_dist.py -g 0 &
-    DMLC_ROLE=worker DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=3 DMLC_NUM_WORKER=6 \
+    DMLC_ROLE=worker DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=4 \
         python ~/learn-gluon/distributed/run_kvstore_dist.py -g 1 &
     """
 
@@ -185,17 +183,20 @@ if __name__ == "__main__":
     parser.add_argument("-w", "--weight-decay", type=float, default=0.001)
     parser.add_argument("-b", "--batch-size", type=int, default=64)
     parser.add_argument("-g", "--gpu", type=int, default=0)
+    parser.add_argument("-c", "--cpu", type=int, default=0)
+    parser.add_argument("-d", "--distributed", type=int, default=1)
+    parser.add_argument("-m", "--mode", type=str, default="dist_async")
     args, unknown = parser.parse_known_args()
 
     crop_size = (320, 480)
     num_classes = 21
-    ctx = [mx.gpu(args.gpu)]
+    ctx = mx.cpu() if args.cpu else [mx.gpu(args.gpu)]
 
     colormap2label = nd.zeros(256 ** 3)
     for i, colormap in enumerate(VOC_COLORMAP):
         colormap2label[(colormap[0]*256+colormap[1]) * 256 + colormap[2]] = i
 
-    kvstore = kv.create("dist_async")
+    kvstore = kv.create(args.mode) if args.distributed else "device"
     num_workers = 0 if sys.platform.startswith("win32") else 4
     voc_train = VOCSegDataset(True, crop_size, "/home/lizh/learn-gluon/data/VOC2012", colormap2label)
     voc_test = VOCSegDataset(False, crop_size, "/home/lizh/learn-gluon/data/VOC2012", colormap2label)
