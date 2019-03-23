@@ -162,17 +162,23 @@ def show_images(imgs, num_rows, num_cols, scale=2):
 
 if __name__ == "__main__":
     """
-    # On scheduler machine
-    DMLC_ROLE=scheduler DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=4 \
+    # scheduler
+    DMLC_ROLE=scheduler DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9090 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=5 \
         python ~/learn-gluon/distributed/run_kvstore_dist.py -c 1 &
 
-    # On other machines
-    DMLC_ROLE=server DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=4 \
+    # server
+    DMLC_ROLE=server DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9090 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=5 \
         python ~/learn-gluon/distributed/run_kvstore_dist.py -c 1 &
-    DMLC_ROLE=worker DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=4 \
+
+    # worker on gpu 0 & 1
+    DMLC_ROLE=worker DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9090 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=5 \
         python ~/learn-gluon/distributed/run_kvstore_dist.py -g 0 &
-    DMLC_ROLE=worker DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9092 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=4 \
+    DMLC_ROLE=worker DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9090 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=5 \
         python ~/learn-gluon/distributed/run_kvstore_dist.py -g 1 &
+
+    # worker on cpu
+    DMLC_ROLE=worker DMLC_PS_ROOT_URI=10.1.1.34 DMLC_PS_ROOT_PORT=9090 DMLC_NUM_SERVER=2 DMLC_NUM_WORKER=5 \
+        python ~/learn-gluon/distributed/run_kvstore_dist.py -c 1 &
     """
 
     parser = argparse.ArgumentParser()
